@@ -1,0 +1,89 @@
+Question 1 
+Define a SQL view Q1(subject_name):
+Give the names of subjects that mentions at least two COMP courses in its prerequisite description, where one of COMP course mentioned must be a level 3 course (i.e., with a course code of the format COMP3***).
+• subject_name should be taken from Subjects.name field;
+Question 2 
+Define an SQL view Q2(course_id) that gives the id of the course that holds Studio in at least 3 different buildings.
+• course_id should be taken from Courses.id field;
+Question 3 
+Define a SQL view Q3(course_id, use_rate):
+Give the courses that used the Central Lecture Block the most in 2008.
+• course_id should be taken from Courses.id field;
+• Return use_rate as integer;
+• For each course, the value use_rate is number of its classes using a room in Central Lecture
+Block building (refers to buildings.name).
+Question 4 
+Define a SQL view Q4(facility):
+Give a complete list of the facilities that do not exist on any of the buildings on UNSW Kensington Campus with a grid reference that begins with the letter ‘C’.
+• facility should be taken from Facilities.description field.
+• Each building on the Kensington campus has a grid reference number to denote its relative position on
+the map (e.g., CSE building has a grid reference of K17 beginning with the letter ‘K’). This information exists in the column Buildings.gridref.
+Question 5 
+Define a SQL view Q5(unsw_id, student_name):
+Give the UNSW id and name of all the distinct domestic students who has only ever scored HD in their courses (refers to the course_enrolments.grade).
+• unsw_id should be taken from People.unswid field;
+• student_name should be taken from People.name field.
+Question 6 
+Define a SQL view Q6(subject_name, non_null_mark_count, null_mark_count): Give the subject name of the course, the number of student marks that are not null, and the number of students marks that are null. We only consider courses offered in Semester 1 2006 that recorded more than 10 students with null marks.
+• subject_name should be taken from Subjects.name field;
+• Returnnon_null_mark_countandnull_mark_countas integer.
+Question 7 
+Define a SQL view Q7(school_name, stream_count):
+Give the schools that have offer more streams than the School of Computer Science and Engineering. Only consider the streams that are directly offered by an organization unit that is a school.
+• school_name should be taken from Orgunits.longname field;
+• Return stream_count as integer.
+Question 8 
+The university is trying to pair students together for a special project.
+Define a SQL view Q8(student_name_local,student_name_intl):
+Give all possible combinations of student pairings. The students concerned are all from in course 2012 Semester 1, Engineering Design who scored higher than 98 marks. To encourage some semblance of international exchange, we want the pair to consist of one domestic student and one international student, and they both should have the same WAM. (We want each pair to be formatted as such <local>, <international> exactly)
+• student_name_local and student_name_intl should be taken from People.name field;
+• Engineering Design refers to Subjects.name.
+Question 9 
+Define a SQL view Q9(ranking, course_id, subject_name, student_diversity_score):
+Give the ranking, course id, the corresponding subject name, and score of the courses with the highest diversity scores. We consider a student diversity metric; the value of which is determined by the number of known distinct countries of origins of all its student members (To help with comparisons, the university always assumes that there is at least one student with the origin country ‘Australia'). We also only consider scores with a Rank of 6 or above.
+• course_id should be taken from Courses.id field;
+• subject_name should be taken from Subjects.name field;
+• Return student_diversity_score as integer.
+• There may be courses with the same diversity score, your result should assign the same rank to courses
+with the same score. The Rank() function in PostgreSQL will be able to do this for you for the ranking column.
+
+Question 10 
+Define a SQL view Q10(subject_code, avg_mark):
+Give the subject codes (of the related courses) and average mark of all PG-career courses offered by School of Computer Science and Engineering in Semester 1 2010.
+• subject_code should be taken from Subjects.code field;
+• Assume that if a student does not have a mark, they have a 0 mark instead.
+• Only consider the courses having more than 10 students.
+• Use AVG() function when calculating the average marks, save the results as numeric(4,2)
+Question 11 
+Give the subjects in 2008, where the average mark received by its students increased the most from semester 1 to semester 2. Define a SQL view Q11(subject_code, inc_rate): Give the subject code and the increase rate of its average mark.
+• subject_code should be taken from Subjects.code field;
+• Only consider the subjects offered by School of Chemistry or School of Accounting.
+• Only consider non-null marks.
+• Increase rate in average mark = (avg_mark of S2 - avg_mark of S1) ÷ avg_mark of S1.
+• Round the increase rate to the nearest 0.0001. (e.g., if inc_rate = 0.01, then return 0.0100; if inc_rate =
+0.01234, then return 0.0123; if inc_rate = 0.02345, then return 0.0235) This rounding behavior is different from the IEEE 754 specification for floating point rounding which PostgreSQL uses for float/real/double precision types. PostgreSQL only performs this type of rounding for numeric and decimal types.
+Question 12 
+We want to find the total lab class time per week of COMP courses taught by the lecturer(s) who has a title of Dr. Define a view Q12 (name, subject_code, year, term, lab_time_per_week): Gives lecturer’s name, the subject code of the course, the year and term of the course provided, and the total lab class time (hours) per week of the course. Note:
+• name should be taken from People.name field;
+• subject_code should be taken from Subjects.code field;
+• year and term should be taken from Semesters.year and Semesters.term fields,
+respectively;
+• Return lab_time_per_week as integer; lab_time_per_week is the sum of all lab class time
+per week for a course;
+• A lecturer refers to his/her Staff_roles.name contains “Lecturer”;
+• A lab class refers to its Class_types.unswid is LAB.
+Question 13 
+Define a view Q13(subject_code, year, term, fail_rate) that gives the fail rate for the semester with the largest number of enrolled students for each COMP course, only considering courses with more than 150 students enrolled. Note:
+• subject_code should be taken from Subjects.code field.
+• year should be taken from Semesters.year field.
+• term should be taken from Semesters.term field.
+• fail rate = number of students with mark less than 50 ÷ number of students with mark
+• When counting the number of enrolled students, consider those with null mark; But when calculating
+fail rate, do not consider null mark records.
+• Round fail_rate to the nearest 0.0001. (e.g., if fail_rate = 0.01, then return 0.0100; if fail_rate =
+0.01234, then return 0.0123; if fail_rate = 0.02345, then return 0.0235).
+
+• COMP course refers to the course whose subject code starts with “COMP”
+To explain, the following table gives the information of each PHYS course whose number of enrolled students is more than 150. The red lines represent the semester with the largest number of enrolled students for each PHYS course (also # of students > 150).
+code | year |term| stu_count ---------------+---------+------+-------------
+PHYS1121 | 2010 | S2 | 167 PHYS1231 | 2012 | S2 | 169 PHYS1231 | 2010 | S2 | 183 PHYS1121 | 2012 | S2 | 186 PHYS1231 | 2011 | S2 | 188 PHYS1160 | 2012 | S2 | 196 PHYS1131 | 2009 | S1 | 201 PHYS1160 | 2012 | S1 | 213 PHYS1160 | 2011 | S2 | 217 PHYS1121 | 2011 | S2 | 238 PHYS1121 | 2008 | S1 | 239 PHYS1131 | 2012 | S1 | 258 PHYS1131 | 2010 | S1 | 318 PHYS1131 | 2011 | S1 | 344 PHYS1121 | 2009 | S1 | 380 PHYS1121 | 2010 | S1 | 453 PHYS1121 | 2012 | S1 | 474 PHYS1121 | 2011 | S1 | 524
